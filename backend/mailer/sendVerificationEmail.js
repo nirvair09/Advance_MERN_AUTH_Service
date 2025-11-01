@@ -3,7 +3,7 @@ import nodemailer from "nodemailer";
 
 export const sendVerificationEmail = async ({ email, name, verificationLink }) => {
   try {
-    console.log("🚀 Sending verification email to:", email);
+    console.log(" Sending verification email to:", email);
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -33,10 +33,10 @@ export const sendVerificationEmail = async ({ email, name, verificationLink }) =
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log("✅ Verification email sent:", info.response);
+    console.log(" Verification email sent:", info.response);
 
   } catch (err) {
-    console.error("❌ Verification email failed:", err.message);
+    console.error(" Verification email failed:", err.message);
     throw new Error("Email not sent");
   }
 };
