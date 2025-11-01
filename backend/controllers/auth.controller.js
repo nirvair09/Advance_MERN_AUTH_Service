@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import generateAndSetToken from "../utils/generateAndSetToken.js";
 
 export const SignIn = async (req, res) => {
     try {
@@ -35,11 +36,17 @@ export const SignIn = async (req, res) => {
 
         const response = await userToBeCreated.save();
         
-        const token=jwt.sign(
-            {id:response._id,email:response.email},
-            process.env.JWT_SECRET,
-            {expiresIn:"7d"}
-        );
+        // const token=jwt.sign(
+        //     {id:response._id,email:response.email},
+        //     process.env.JWT_SECRET,
+        //     {expiresIn:"7d"}
+        // );
+
+        const token=generateAndSetToken({
+            email:response.email,
+            userId:response._id,
+            expiresIn:"7d",
+        });
         // console.log("User saved at DataBase", response);
         res.cookie("token",token,{
             httpOnly:true,
@@ -66,5 +73,33 @@ export const SignIn = async (req, res) => {
             success: false,
             message: error.message || "Something went wrong while saving to DB"
         });
+    }
+};
+
+
+export const LogIn = async(req,res)=>{
+    try {
+        const {email,password}=req.body;
+
+        if(!email || !password){
+            res.status(400).json({success:false,message:"Must fill all fields"});
+        }
+        
+        const user = User.findOne({email});
+
+        if(!user) 			
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
+
+
+        const isMatchedPassword=bcrypt.compare(password,user.password);
+
+			
+        if(!isMatchedPassword)  
+            return res.status(400).json({ success: false, message: "Invalid credentials" });
+        
+        
+
+    } catch (error) {
+        res.status(400).json({success:false,message:"Failed to login ,might be server error"});
     }
 }
