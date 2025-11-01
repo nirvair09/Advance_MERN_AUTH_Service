@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs";
 import generateAndSetToken from "../utils/generateAndSetToken.js";
+import { sendWelcomeEmail } from "../mailer/sendWelcomeEmail.js";
 
 export const SignIn = async (req, res) => {
     try {
@@ -35,12 +36,6 @@ export const SignIn = async (req, res) => {
 
         const response = await userToBeCreated.save();
 
-        // const token=jwt.sign(
-        //     {id:response._id,email:response.email},
-        //     process.env.JWT_SECRET,
-        //     {expiresIn:"7d"}
-        // );
-
         if (!response || !response._id) {
             // this means save failed silently or returned nothing
             return res.status(500).json({
@@ -62,6 +57,8 @@ export const SignIn = async (req, res) => {
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000,
         });
+
+        await sendWelcomeEmail({email:response.email,name:response.name});
 
         res.status(201)
             .json({
