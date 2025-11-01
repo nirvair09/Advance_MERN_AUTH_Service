@@ -14,8 +14,8 @@ export const SignIn = async (req, res) => {
         const preExistingUser = await User.findOne({ email });
 
         if (preExistingUser) {
-            return
-            res.status(400)
+            return res
+                .status(400)
                 .json({
                     success: false,
                     message: "User already exists with same email_ID , try login"
@@ -34,9 +34,19 @@ export const SignIn = async (req, res) => {
         });
 
         const response = await userToBeCreated.save();
-
-        console.log("User saved at DataBase", response);
-
+        
+        const token=jwt.sign(
+            {id:response._id,email:response.email},
+            process.env.JWT_SECRET,
+            {expiresIn:"7d"}
+        );
+        // console.log("User saved at DataBase", response);
+        res.cookie("token",token,{
+            httpOnly:true,
+            secure:process.env.NODE_ENV === "production",
+            sameSite:"strict",
+            maxAge:7*24*60*60*1000,
+        })
         res
             .status(201)
             .json({
