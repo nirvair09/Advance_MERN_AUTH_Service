@@ -42,6 +42,15 @@ export const SignIn = async (req, res) => {
         //     {expiresIn:"7d"}
         // );
 
+        if (!response || !response._id) {
+  // this means save failed silently or returned nothing
+  return res.status(500).json({
+    success: false,
+    message: "User not saved to database, cannot generate token",
+  });
+}
+
+         //only if save succedded;
         const token=generateAndSetToken({
             email:response.email,
             userId:response._id,
@@ -53,9 +62,9 @@ export const SignIn = async (req, res) => {
             secure:process.env.NODE_ENV === "production",
             sameSite:"strict",
             maxAge:7*24*60*60*1000,
-        })
-        res
-            .status(201)
+        });
+        
+        res.status(201)
             .json({
                 success: true,
                 message: "User saved successfully at MongoDataBase",
@@ -82,24 +91,45 @@ export const LogIn = async(req,res)=>{
         const {email,password}=req.body;
 
         if(!email || !password){
-            res.status(400).json({success:false,message:"Must fill all fields"});
+           return res.status(400).json({success:false,message:"Must fill all fields"});
         }
         
-        const user = User.findOne({email});
+        const response= await User.findOne({email});
 
-        if(!user) 			
+        if(!response) 			
             return res.status(400).json({ success: false, message: "Invalid credentials" });
 
 
-        const isMatchedPassword=bcrypt.compare(password,user.password);
+        const isMatchedPassword=await bcrypt.compare(password,response.password);
 
 			
         if(!isMatchedPassword)  
             return res.status(400).json({ success: false, message: "Invalid credentials" });
         
+        const token=generateAndSetToken({
+            email:response.email,
+            userId:response._id,
+            expiresIn:"7d",
+        });
         
+        res.cookie("token",token,{
+            httpOnly:true,
+            secure:process.env.NODE_ENV==="production",
+            sameSite:"strict",
+            maxAge:7*24*60*60*1000,
+        });
+
+        res.status(201).json({
+            success:true,
+            message:"Logged In successfully",
+            user:{
+                ...response._doc,
+                password:undefined,
+            },
+            token,
+        });
 
     } catch (error) {
         res.status(400).json({success:false,message:"Failed to login ,might be server error"});
     }
-}
+};
