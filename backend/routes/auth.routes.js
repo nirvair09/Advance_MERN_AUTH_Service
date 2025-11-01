@@ -8,6 +8,6 @@ router.post("/sign-in",SignIn);
 router.post("/log-in",LogIn);
 router.post("/log-out",LogOut);
 
-router.post("/verify/:v_id",verifyEmail);
+router.post("/verify/:token",verifyEmail);
 
 export default router;
