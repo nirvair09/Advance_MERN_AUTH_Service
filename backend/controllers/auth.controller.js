@@ -2,6 +2,7 @@ import User from "../models/user.model.js"
 import bcrypt from "bcryptjs";
 import generateAndSetToken from "../utils/generateAndSetToken.js";
 import { sendWelcomeEmail } from "../mailer/sendWelcomeEmail.js";
+import { sendVerificationEmail } from "../mailer/sendVerificationEmail.js";
 
 export const SignIn = async (req, res) => {
     try {
@@ -59,7 +60,8 @@ export const SignIn = async (req, res) => {
         });
 
         await sendWelcomeEmail({email:response.email,name:response.name});
-
+        await sendVerificationEmail({email:response.email,name:response.name,verificationLink:response.verificationToken})
+        
         res.status(201)
             .json({
                 success: true,
