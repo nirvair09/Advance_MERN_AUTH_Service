@@ -1,6 +1,6 @@
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 
 export const SignIn = async (req, res) => {
     try {
@@ -56,6 +56,7 @@ export const SignIn = async (req, res) => {
                     ...response._doc,
                     password: undefined,
                 },
+                token,
             });
 
 
