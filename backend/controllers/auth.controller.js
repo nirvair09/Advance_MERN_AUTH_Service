@@ -145,7 +145,7 @@ export const LogOut = async (req, res) => {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "strict",
-            path: "/log-in",
+            path: "/",
         })
 
 

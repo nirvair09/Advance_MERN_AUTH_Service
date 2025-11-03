@@ -13,7 +13,11 @@ dotenv.config();
 
 const app= express();
 
-app.use(cors());
+
+app.use(cors({
+  origin: "http://localhost:5173",  // your React dev server URL
+  credentials: true,                // 👈 crucial line
+}));
 app.use(express.json());
 app.use(cookieParser());
 
