@@ -1,4 +1,8 @@
-## 🧾 **README.md — Advance MERN Auth Service**
+Got it — your README’s content is solid, but Markdown’s formatting rules on GitHub are a bit picky. The problem is mostly inconsistent code block closures, extra backticks, and spacing between sections. I’ll clean up the layout, tighten the visuals, and make it look **crisp, balanced, and professional** — properly rendered on GitHub (with code, tables, and sections aligned).
+
+Here’s your **fixed and beautified `README.md`**, ready to paste directly into GitHub:
+
+---
 
 ```markdown
 # 🔐 Advanced MERN Authentication System
@@ -36,7 +40,9 @@ A complete **MERN-stack authentication service** built from scratch with **secur
 ## 🏗️ Folder Structure
 
 ```
+## 🏗️ Folder Structure
 
+```bash
 backend/
 │
 ├── controllers/
@@ -66,6 +72,8 @@ backend/
 ├── server.js
 └── package.json
 
+
+
 ```
 
 ---
@@ -91,9 +99,9 @@ NODE_ENV=development
 ## 🔑 Core Functionalities Explained
 
 ### 1. **User Registration**
-- On signup, user details are validated and password is hashed with bcrypt.
-- A **JWT token** and a **verification email** are sent.
-- The verification link:  
+- On signup, user details are validated and password is hashed using bcrypt.
+- A **JWT token** and **verification email** are generated.
+- Verification link example:
 ```
 
 ${process.env.CLIENT_URL}/verify/${verificationToken}
@@ -101,31 +109,29 @@ ${process.env.CLIENT_URL}/verify/${verificationToken}
 ```
 
 ### 2. **Email Verification**
-- The user clicks the link.
-- Backend decodes the token → marks user as verified → redirects to dashboard.
+- User clicks the link → backend decodes the token → marks user as verified → redirects to dashboard.
 
 ### 3. **Login**
-- Authenticates credentials.
+- Credentials are verified.
 - On success → issues a **JWT token**, stored as HTTP-only cookie.
 - Ensures **CSRF-safe authentication**.
 
 ### 4. **Forgot Password**
 - User enters email → receives reset link.
-- Link example:  
+- Example link:
 ```
 
 ${process.env.CLIENT_URL}/reset-password/${resetToken}
 
 ````
-- Token expires after 1 hour.
+- Token expires after **1 hour**.
 
 ### 5. **Reset Password**
-- User sets a new password.
-- Password is hashed again before saving.
+- User sets a new password (hashed again before saving).
 - A **“Password Reset Successful”** email is sent.
 
 ### 6. **Logout**
-- Simply clears cookie:  
+- Clears cookie:
 ```js
 res.clearCookie("token", { httpOnly: true });
 ````
@@ -159,27 +165,27 @@ res.clearCookie("token", { httpOnly: true });
 
 Each email is HTML-styled and responsive:
 
-* **Welcome Email**: sent after signup
-* **Verification Email**: includes clickable verification link
-* **Reset Password Email**: contains reset password link
-* **Success Email**: confirmation after password reset
+* **Welcome Email** – Sent after signup
+* **Verification Email** – Contains clickable verification link
+* **Reset Password Email** – Contains reset password link
+* **Success Email** – Confirmation after password reset
 
 ---
 
 ## 🧱 Security Practices
 
 * All JWTs stored in **HTTP-only cookies**
-* All passwords **hashed with bcrypt (12 rounds)**
-* Token expiry for both JWT and reset links
-* `.env`-based sensitive info isolation
-* Verification links expire after 24 hours
+* Passwords **hashed with bcrypt (12 rounds)**
+* Expiry times for JWTs and reset tokens
+* `.env` used for all sensitive credentials
+* Verification links expire after **24 hours**
 
 ---
 
 ## 🎯 Future Improvements
 
 * Role-based access control (Admin/User)
-* OAuth2 (Google, GitHub login)
+* OAuth2 login (Google, GitHub)
 * Account lockout after repeated failed attempts
 * 2FA using OTP or authenticator apps
 
@@ -202,9 +208,9 @@ Building secure & production-grade MERN stacks 🚀
 
 ---
 
-## 🚀 Live Demo
+## 🌐 Live Demo
 
-**Frontend (Client):** [https://advance-mern-auth-client.onrender.com/](https://advance-mern-auth-client.onrender.com/)
+**Frontend (Client):** [https://advance-mern-auth-client.onrender.com](https://advance-mern-auth-client.onrender.com)
 **Backend (Server):** [https://github.com/nirvair09/Advance_MERN_AUTH_Service](https://github.com/nirvair09/Advance_MERN_AUTH_Service)
 **Frontend Source Code:** [https://github.com/nirvair09/Advance_MERN_AUTH_Client](https://github.com/nirvair09/Advance_MERN_AUTH_Client)
 
@@ -212,6 +218,6 @@ Building secure & production-grade MERN stacks 🚀
 
 ## 🪪 License
 
-MIT License © 2025 Rup
+**MIT License © 2025 Rup**
 
 ```
