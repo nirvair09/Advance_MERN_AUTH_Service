@@ -1,10 +1,3 @@
-Got it — your README’s content is solid, but Markdown’s formatting rules on GitHub are a bit picky. The problem is mostly inconsistent code block closures, extra backticks, and spacing between sections. I’ll clean up the layout, tighten the visuals, and make it look **crisp, balanced, and professional** — properly rendered on GitHub (with code, tables, and sections aligned).
-
-Here’s your **fixed and beautified `README.md`**, ready to paste directly into GitHub:
-
----
-
-```markdown
 # 🔐 Advanced MERN Authentication System
 
 A complete **MERN-stack authentication service** built from scratch with **secure token-based authentication**, **email verification**, and **password reset via email link** — all implemented using **Node.js, Express, MongoDB, JWT, and Nodemailer**.
@@ -37,9 +30,6 @@ A complete **MERN-stack authentication service** built from scratch with **secur
 
 ---
 
-## 🏗️ Folder Structure
-
-```
 ## 🏗️ Folder Structure
 
 ```bash
